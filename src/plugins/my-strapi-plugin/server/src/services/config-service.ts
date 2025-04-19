@@ -15,9 +15,9 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 
         /* Create config if not found */
         if (!config) {
-            config = (await strapi.entityService.create(uid, {
-                fields,
+            config = (await strapi.db.query(uid).create({
                 data: {},
+                select: fields,
             })) as Config;
 
             console.log(config);
@@ -31,10 +31,14 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
         let config: Config = await this.retrieve();
 
         /* Update config */
-        config = await strapi.entityService.update(uid, config.id, {
-            ...data,
-            fields,
-        });
+        if (!config) {
+            config = (await strapi.db.query(uid).update({
+                ...data,
+                fields,
+            })) as Config;
+
+            console.log(config);
+        }
 
         return config;
     },

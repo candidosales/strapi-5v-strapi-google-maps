@@ -1,5 +1,4 @@
-import controller from './controller';
-
+import config from './config-controller';
 export default {
-  controller,
+    config,
 };

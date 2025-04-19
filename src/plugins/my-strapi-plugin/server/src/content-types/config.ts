@@ -1,8 +1,5 @@
-import utils from '@strapi/utils';
+import { sanitize } from '@strapi/utils';
 import { Config } from '@strapi/utils/dist/types';
-
-const { sanitize } = utils;
-const { contentAPI } = sanitize;
 
 export default {
     kind: 'singleType',
@@ -33,6 +30,9 @@ export default {
     },
 };
 
+// export function sanitizeConfigInput(data: object, ctx: any): Promise<Config> {
+//     return contentAPI.input(data, this, ctx.state.auth);
+// }
 export function sanitizeConfigInput(data: object, ctx: any): Promise<Config> {
-    return contentAPI.input(data, this, ctx.state.auth);
+    return sanitize.input(data, this, ctx.state.auth);
 }
