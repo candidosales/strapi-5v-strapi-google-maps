@@ -18,12 +18,11 @@ import { Config } from '../../../../server/src/interface';
 import { PLUGIN_ID } from 'src/pluginId';
 import { Page, useNotification } from '@strapi/strapi/admin';
 import { useIntl } from 'react-intl';
-import useAxios from 'src/utils/axios';
+import { getConfig, updateConfig } from 'src/utils/axios';
 
 const Settings = () => {
     const toggleNotification = useNotification();
     const { formatMessage } = useIntl();
-    const axios = useAxios();
 
     const [isLoading, setIsLoading] = useState(true);
     const [errorOccurred, setErrorOccurred] = useState(false);
@@ -36,8 +35,7 @@ const Settings = () => {
 
     /* Fetch plugin config using axios instance */
     useEffect(() => {
-        axios
-            .get(`/config`)
+        getConfig()
             .then((response: AxiosResponse) => {
                 setIsLoading(false);
 
@@ -58,9 +56,7 @@ const Settings = () => {
         setIsLoading(true);
 
         try {
-            await axios.put(`/config`, {
-                data,
-            });
+            await updateConfig(data);
 
             setMadeChanges(false);
 

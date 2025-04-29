@@ -1,8 +1,9 @@
-import axios from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { PLUGIN_ID } from '../pluginId';
 import { useAuth } from '@strapi/strapi/admin';
+import { Config } from '../../../server/src/interface';
 
-const useAxios = () => {
+const useAxios = (): AxiosInstance => {
     const token = useAuth('ConfigurationProvider', (state) => state.token);
 
     const instance = axios.create({
@@ -27,3 +28,10 @@ const useAxios = () => {
 };
 
 export default useAxios;
+
+export const getConfig = (): Promise<AxiosResponse> => useAxios().get('/config');
+
+export const updateConfig = (config: Config): Promise<AxiosResponse> =>
+    useAxios().put('/config', {
+        data: config,
+    });
