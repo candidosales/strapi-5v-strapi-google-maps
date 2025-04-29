@@ -1,1 +1,3 @@
-export const PLUGIN_ID = 'strapi-google-maps';
+const PLUGIN_ID = 'strapi-google-maps';
+
+export { PLUGIN_ID };

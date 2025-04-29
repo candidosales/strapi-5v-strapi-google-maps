@@ -15,10 +15,10 @@ import {
 import { Check } from '@strapi/icons';
 import { AxiosResponse } from 'axios';
 import { Config } from '../../../../server/src/interface';
-import { PLUGIN_ID } from 'src/pluginId';
+import { PLUGIN_ID } from '../../pluginId';
 import { Page, useNotification } from '@strapi/strapi/admin';
 import { useIntl } from 'react-intl';
-import { getConfig, updateConfig } from 'src/utils/axios';
+import { getConfig, updateConfig } from '../../utils/axios';
 
 const Settings = () => {
     const { toggleNotification } = useNotification();
@@ -160,4 +160,4 @@ const Settings = () => {
     );
 };
 
-export default Settings;
+export { Settings };

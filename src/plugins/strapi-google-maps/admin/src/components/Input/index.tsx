@@ -11,7 +11,7 @@ import {
 } from '@react-google-maps/api';
 import { getConfig } from '../../utils/axios';
 import { useGeolocated } from 'react-geolocated';
-import { getDefaultCordsFromAttribute } from 'src/utils/input';
+import { getDefaultCordsFromAttribute } from '../../utils/input';
 import { Config, Coordinates, Location } from '../../../../server/src/interface';
 
 const mapsLibraries: 'places'[] = ['places']; // allow the use of places api for searchbox
