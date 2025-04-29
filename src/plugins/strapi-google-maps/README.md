@@ -157,3 +157,6 @@ Lastly, recompile the admin panel of your Strapi project.
 ```bash
 npm run build
 ```
+
+## Migration
+- Design system: https://design-system-git-main-strapijs.vercel.app/?path=/docs/getting-started-migration-guides-v1-to-v2--docs

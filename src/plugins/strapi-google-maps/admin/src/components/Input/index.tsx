@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Loader, Button } from '@strapi/design-system';
-import { MinusCircle } from '@strapi/icons';
+import { ArrowClockwise } from '@strapi/icons';
 import Geohash from 'latlon-geohash';
 import { useIntl } from 'react-intl';
 import {
@@ -251,8 +251,7 @@ const Input = ({
             )}
 
             <Box paddingTop={2}>
-                {/* <!-- TODO: Replace MinusCircle to another Refresh --> */}
-                <Button startIcon={<MinusCircle />} onClick={() => resetComponent(false)}>
+                <Button startIcon={<ArrowClockwise />} onClick={() => resetComponent(false)}>
                     {formatMessage({
                         id: 'google-maps.input.button.reset',
                         defaultMessage: 'Reset',

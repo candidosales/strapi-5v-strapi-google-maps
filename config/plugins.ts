@@ -1,6 +1,6 @@
 export default () => ({
     'strapi-google-maps': {
         enabled: true,
-        resolve: './src/plugins/my-strapi-plugin'
+        resolve: './src/plugins/strapi-google-maps',
     },
 });

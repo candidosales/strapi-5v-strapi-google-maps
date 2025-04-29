@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
     Main,
-    ContentLayout,
-    HeaderLayout,
-    Layout,
     Loader,
     TextInput,
     Box,
     Button,
     Link,
     Grid,
-    GridItem,
 } from '@strapi/design-system';
 import { Check } from '@strapi/icons';
 import { AxiosResponse } from 'axios';
@@ -84,78 +80,76 @@ const Settings = () => {
 
     return (
         <Box background='neutral100'>
-            <Layout>
-                <Main aria-busy={isLoading}>
-                    <HeaderLayout
-                        primaryAction={
-                            <Button
-                                startIcon={<Check />}
-                                loading={isLoading}
-                                disabled={errorOccurred || !madeChanges}
-                                onClick={handleSave}
-                            >
-                                Save
-                            </Button>
-                        }
-                        title='Google Maps Configuration'
-                        subtitle='Configure your Google Maps API key and other settings'
-                    />
+            <Main aria-busy={isLoading}>
+                <Box
+                    primaryAction={
+                        <Button
+                            startIcon={<Check />}
+                            loading={isLoading}
+                            disabled={errorOccurred || !madeChanges}
+                            onClick={handleSave}
+                        >
+                            Save
+                        </Button>
+                    }
+                    title='Google Maps Configuration'
+                    subtitle='Configure your Google Maps API key and other settings'
+                />
 
-                    <ContentLayout>
-                        {errorOccurred ? (
-                            // @ts-ignore
-                            <Page.Error content="An error occurred" icon={<div>Custom icon</div>} />
-                        ) : isLoading ? (
-                            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                <Loader>Loading content...</Loader>
-                            </div>
-                        ) : (
-                            <Box
-                                shadow='tableShadow'
-                                background='neutral0'
-                                paddingTop={6}
-                                paddingLeft={7}
-                                paddingRight={7}
-                                paddingBottom={6}
-                                hasRadius
-                            >
-                                <TextInput
-                                    type='password'
-                                    id='apiKey'
-                                    name='apiKey'
-                                    placeholder='Paste your Google Maps API key here'
-                                    label='API Key'
-                                    value={data.googleMapsKey}
-                                    onChange={(e: any) => {
-                                        setData({ ...data, googleMapsKey: e.target.value });
-                                        setMadeChanges(true);
-                                    }}
-                                />
+                <Box>
+                    {errorOccurred ? (
+                        // @ts-ignore
+                        <Page.Error content="An error occurred" icon={<div>Custom icon</div>} />
+                    ) : isLoading ? (
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <Loader>Loading content...</Loader>
+                        </div>
+                    ) : (
+                        <Box
+                            shadow='tableShadow'
+                            background='neutral0'
+                            paddingTop={6}
+                            paddingLeft={7}
+                            paddingRight={7}
+                            paddingBottom={6}
+                            hasRadius
+                        >
+                            <TextInput
+                                type='password'
+                                id='apiKey'
+                                name='apiKey'
+                                placeholder='Paste your Google Maps API key here'
+                                label='API Key'
+                                value={data.googleMapsKey}
+                                onChange={(e: any) => {
+                                    setData({ ...data, googleMapsKey: e.target.value });
+                                    setMadeChanges(true);
+                                }}
+                            />
 
-                                <Grid>
-                                    <GridItem col={5} padding={2}>
-                                        <Link
-                                            href='https://developers.google.com/maps/documentation/javascript/cloud-setup'
-                                            isExternal
-                                        >
-                                            Get your Google Maps API key
-                                        </Link>
-                                    </GridItem>
+                            <Grid.Root>
+                                <Grid.Item col={5} padding={2}>
+                                    <Link
+                                        href='https://developers.google.com/maps/documentation/javascript/cloud-setup'
+                                        isExternal
+                                    >
+                                        Get your Google Maps API key
+                                    </Link>
+                                </Grid.Item>
 
-                                    <GridItem col={5} padding={2}>
-                                        <Link
-                                            href='https://developers.google.com/maps/documentation/javascript/places'
-                                            isExternal
-                                        >
-                                            Grant your API key access to the Google Places API
-                                        </Link>
-                                    </GridItem>
-                                </Grid>
-                            </Box>
-                        )}
-                    </ContentLayout>
-                </Main>
-            </Layout>
+                                <Grid.Item col={5} padding={2}>
+                                    <Link
+                                        href='https://developers.google.com/maps/documentation/javascript/places'
+                                        isExternal
+                                    >
+                                        Grant your API key access to the Google Places API
+                                    </Link>
+                                </Grid.Item>
+                            </Grid.Root>
+                        </Box>
+                    )}
+                </Box>
+            </Main>
         </Box>
     );
 };
