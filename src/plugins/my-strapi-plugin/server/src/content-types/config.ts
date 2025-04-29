@@ -1,5 +1,5 @@
 import { sanitize } from '@strapi/utils';
-import { Config } from '@strapi/utils/dist/types';
+import { Config } from 'src/interface';
 
 export default {
     kind: 'singleType',
@@ -36,3 +36,10 @@ export default {
 export function sanitizeConfigInput(data: object, ctx: any): Promise<Config> {
     return sanitize.input(data, this, ctx.state.auth);
 }
+
+
+// export function sanitizeInput(data, ctx) {
+//     const auth = getAuthFromKoaContext(ctx);
+
+//     return strapi.contentAPI.sanitize.input(data, contentType, { auth });
+//   },

@@ -13,14 +13,17 @@ import {
     GridItem,
 } from '@strapi/design-system';
 import { Check } from '@strapi/icons';
-import axios from '../../utils/axios';
 import { AxiosResponse } from 'axios';
-import { AnErrorOccurred, useNotification } from '@strapi/helper-plugin';
-import { Config } from '../../../../types';
+import { Config } from '../../../../server/src/interface';
 import { PLUGIN_ID } from 'src/pluginId';
+import { Page, useNotification } from '@strapi/strapi/admin';
+import { useIntl } from 'react-intl';
+import useAxios from 'src/utils/axios';
 
 const Settings = () => {
     const toggleNotification = useNotification();
+    const { formatMessage } = useIntl();
+    const axios = useAxios();
 
     const [isLoading, setIsLoading] = useState(true);
     const [errorOccurred, setErrorOccurred] = useState(false);
@@ -63,20 +66,20 @@ const Settings = () => {
 
             toggleNotification({
                 type: 'success',
-                message: {
+                message: formatMessage({
                     id: `${PLUGIN_ID}.config.updated`,
                     defaultMessage: 'Configuration updated',
-                },
+                }),
             });
         } catch (error) {
             console.error(error);
 
             toggleNotification({
                 type: 'warning',
-                message: {
+                message: formatMessage({
                     id: `${PLUGIN_ID}.error`,
                     defaultMessage: 'An error occurred',
-                },
+                })
             });
         } finally {
             setIsLoading(false);
@@ -104,12 +107,7 @@ const Settings = () => {
 
                     <ContentLayout>
                         {errorOccurred ? (
-                            <AnErrorOccurred
-                                content={{
-                                    id: `${PLUGIN_ID}.error`,
-                                    defaultMessage: 'An error occurred',
-                                }}
-                            />
+                            <Page.Error content="An error occurred" icon={<div>Custom icon</div>} />
                         ) : isLoading ? (
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <Loader>Loading content...</Loader>

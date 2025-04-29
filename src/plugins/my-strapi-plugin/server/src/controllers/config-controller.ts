@@ -15,6 +15,8 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
     },
 
     async update(ctx: any) {
+        console.log('update - ctx', ctx);
+        // TODO - Fix sanitizeConfigInput
         const data: Config = await sanitizeConfigInput(ctx.request.body, ctx);
 
         const config: Config = await strapi

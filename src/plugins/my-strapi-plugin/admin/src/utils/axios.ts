@@ -1,11 +1,29 @@
 import axios from 'axios';
 import { PLUGIN_ID } from '../pluginId';
-import { auth } from '@strapi/helper-plugin';
+import { useAuth } from '@strapi/strapi/admin';
 
-export default axios.create({
-    baseURL: `http://localhost:1337/${PLUGIN_ID}`,
-    headers: {
-        Authorization: `Bearer ${auth.getToken()}`,
-        'Content-Type': 'application/json',
-    },
-});
+const useAxios = () => {
+    const token = useAuth('ConfigurationProvider', (state) => state.token);
+
+    const instance = axios.create({
+        baseURL: `http://localhost:1337/${PLUGIN_ID}`,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    // Add a request interceptor to set the Authorization header dynamically
+    instance.interceptors.request.use(
+        async (config) => {
+            if (token) {
+                config.headers['Authorization'] = `Bearer ${token}`;
+            }
+            return config;
+        },
+        (error) => Promise.reject(error)
+    );
+
+    return instance;
+};
+
+export default useAxios;
