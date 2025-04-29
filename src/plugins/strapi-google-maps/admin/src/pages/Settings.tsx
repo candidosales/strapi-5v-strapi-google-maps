@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { CheckPagePermissions } from '@strapi/helper-plugin';
+import { Page } from '@strapi/strapi/admin';
 import { PLUGIN_ID } from 'src/pluginId';
 import Settings from 'src/components/Settings';
 
@@ -13,9 +13,9 @@ const permissions = [{ action: `plugin::${PLUGIN_ID}.config`, subject: null }];
 
 const SettingsPage = () => {
     return (
-        <CheckPagePermissions permissions={permissions}>
+        <Page.Protect permissions={permissions}>
             <Settings />
-        </CheckPagePermissions>
+        </Page.Protect>
     );
 };
 

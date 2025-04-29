@@ -9,6 +9,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
         let config: Config | null;
 
         /* Find existing config */
+        // @ts-ignore
         config = await strapi.entityService.findMany(uid, {
             fields,
         });

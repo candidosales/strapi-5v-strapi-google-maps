@@ -21,7 +21,7 @@ import { useIntl } from 'react-intl';
 import { getConfig, updateConfig } from 'src/utils/axios';
 
 const Settings = () => {
-    const toggleNotification = useNotification();
+    const { toggleNotification } = useNotification();
     const { formatMessage } = useIntl();
 
     const [isLoading, setIsLoading] = useState(true);
@@ -103,6 +103,7 @@ const Settings = () => {
 
                     <ContentLayout>
                         {errorOccurred ? (
+                            // @ts-ignore
                             <Page.Error content="An error occurred" icon={<div>Custom icon</div>} />
                         ) : isLoading ? (
                             <div style={{ display: 'flex', justifyContent: 'center' }}>

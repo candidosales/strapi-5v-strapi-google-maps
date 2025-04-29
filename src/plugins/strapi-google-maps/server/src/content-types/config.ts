@@ -32,5 +32,6 @@ const schema = {
 export default schema;
 
 export function sanitizeConfigInput(data: object, ctx: any): Promise<Config> {
+    // @ts-ignore
     return strapi.contentAPI.sanitize.input(data, schema, { auth: ctx.state.auth });
 }
