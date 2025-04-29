@@ -119,7 +119,7 @@ const Settings = () => {
                                 hasRadius
                             >
                                 <TextInput
-                                    type='text'
+                                    type='password'
                                     id='apiKey'
                                     name='apiKey'
                                     placeholder='Paste your Google Maps API key here'
