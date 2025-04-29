@@ -7,7 +7,7 @@ const useAxios = (): AxiosInstance => {
     const token = useAuth('ConfigurationProvider', (state) => state.token);
 
     const instance = axios.create({
-        baseURL: `http://localhost:1337/${PLUGIN_ID}`,
+        baseURL: `${process.env.STRAPI_ADMIN_BACKEND_URL}/${PLUGIN_ID}`,
         headers: {
             'Content-Type': 'application/json',
         },

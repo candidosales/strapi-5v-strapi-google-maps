@@ -1,7 +1,6 @@
-import { sanitize } from '@strapi/utils';
 import { Config } from 'src/interface';
 
-export default {
+const schema = {
     kind: 'singleType',
     collectionName: 'google_maps_configs',
     info: {
@@ -30,16 +29,8 @@ export default {
     },
 };
 
-// export function sanitizeConfigInput(data: object, ctx: any): Promise<Config> {
-//     return contentAPI.input(data, this, ctx.state.auth);
-// }
+export default schema;
+
 export function sanitizeConfigInput(data: object, ctx: any): Promise<Config> {
-    return sanitize.input(data, this, ctx.state.auth);
+    return strapi.contentAPI.sanitize.input(data, schema, { auth: ctx.state.auth });
 }
-
-
-// export function sanitizeInput(data, ctx) {
-//     const auth = getAuthFromKoaContext(ctx);
-
-//     return strapi.contentAPI.sanitize.input(data, contentType, { auth });
-//   },
