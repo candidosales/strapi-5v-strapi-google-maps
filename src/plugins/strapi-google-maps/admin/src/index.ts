@@ -44,7 +44,7 @@ export default {
             type: 'json',
             intlLabel: {
                 id: getTranslation('input.label'),
-                defaultMessage: name,
+                defaultMessage: "Location",
             },
             intlDescription: {
                 id: 'google-maps.input.description',

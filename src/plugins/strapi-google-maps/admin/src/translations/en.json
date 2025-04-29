@@ -1,5 +1,9 @@
 {
     "input.search.placeholder": "Search for a place",
     "input.error.required": "You must pick a location",
-    "input.button.reset": "Reset"
+    "input.button.reset": "Reset",
+    "input.label": "Location",
+    "input.description": "Pick your location",
+    "input.label.latitude": "Latitude",
+    "input.label.longitude": "Longitude"
 }
