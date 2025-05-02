@@ -12,7 +12,7 @@ import { Check } from '@strapi/icons';
 import { AxiosResponse } from 'axios';
 import { Config } from '../../../../server/src/interface';
 import { PLUGIN_ID } from '../../pluginId';
-import { Page, useNotification } from '@strapi/strapi/admin';
+import { Page, Layouts, useNotification } from '@strapi/strapi/admin';
 import { useIntl } from 'react-intl';
 import { getConfig, updateConfig } from '../../utils/axios';
 
@@ -20,7 +20,7 @@ const Settings = () => {
     const { toggleNotification } = useNotification();
     const { formatMessage } = useIntl();
 
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [errorOccurred, setErrorOccurred] = useState(false);
 
     const [data, setData] = useState<Config>({
@@ -30,22 +30,22 @@ const Settings = () => {
     const [madeChanges, setMadeChanges] = useState(false);
 
     /* Fetch plugin config using axios instance */
-    useEffect(() => {
-        getConfig()
-            .then((response: AxiosResponse) => {
-                setIsLoading(false);
+    // useEffect(() => {
+    //     getConfig()
+    //         .then((response: AxiosResponse) => {
+    //             setIsLoading(false);
 
-                const { data: config }: { data: Config } = response.data;
-                setData(config);
-            })
-            .catch((error: any) => {
-                setIsLoading(false);
+    //             const { data: config }: { data: Config } = response.data;
+    //             setData(config);
+    //         })
+    //         .catch((error: any) => {
+    //             setIsLoading(false);
 
-                console.error(error);
+    //             console.error(error);
 
-                setErrorOccurred(true);
-            });
-    }, []);
+    //             setErrorOccurred(true);
+    //         });
+    // }, []);
 
     /* Save plugin config using axios instance */
     const handleSave = async () => {
@@ -79,79 +79,77 @@ const Settings = () => {
     };
 
     return (
-        <Box background='neutral100'>
-            <Main aria-busy={isLoading}>
-                <Box
-                    primaryAction={
-                        <Button
-                            startIcon={<Check />}
-                            loading={isLoading}
-                            disabled={errorOccurred || !madeChanges}
-                            onClick={handleSave}
-                        >
-                            Save
-                        </Button>
-                    }
-                    title='Google Maps Configuration'
-                    subtitle='Configure your Google Maps API key and other settings'
-                />
+        <Page.Main>
+            <Layouts.Header
+                primaryAction={
+                    <Button
+                        startIcon={<Check />}
+                        loading={isLoading}
+                        disabled={errorOccurred || !madeChanges}
+                        onClick={handleSave}
+                    >
+                        Save
+                    </Button>
+                }
+                title='Google Maps Configuration'
+                subtitle='Configure your Google Maps API key and other settings'
+            />
 
-                <Box>
-                    {errorOccurred ? (
-                        // @ts-ignore
-                        <Page.Error content="An error occurred" icon={<div>Custom icon</div>} />
-                    ) : isLoading ? (
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Loader>Loading content...</Loader>
-                        </div>
-                    ) : (
-                        <Box
-                            shadow='tableShadow'
-                            background='neutral0'
-                            paddingTop={6}
-                            paddingLeft={7}
-                            paddingRight={7}
-                            paddingBottom={6}
-                            hasRadius
-                        >
-                            <TextInput
-                                type='password'
-                                id='apiKey'
-                                name='apiKey'
-                                placeholder='Paste your Google Maps API key here'
-                                label='API Key'
-                                value={data.googleMapsKey}
-                                onChange={(e: any) => {
-                                    setData({ ...data, googleMapsKey: e.target.value });
-                                    setMadeChanges(true);
-                                }}
-                            />
+            <Layouts.Content>
+                {errorOccurred ? (
+                    // @ts-ignore
+                    <Page.Error content="An error occurred" icon={<div>Custom icon</div>} />
+                ) : isLoading ? (
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Loader>Loading content...</Loader>
+                    </div>
+                ) : (
+                    <Box
+                        shadow='tableShadow'
+                        background='neutral0'
+                        paddingTop={6}
+                        paddingLeft={7}
+                        paddingRight={7}
+                        paddingBottom={6}
+                        hasRadius
+                    >
+                        <TextInput
+                            type='password'
+                            id='apiKey'
+                            name='apiKey'
+                            placeholder='Paste your Google Maps API key here'
+                            label='API Key'
+                            value={data.googleMapsKey}
+                            onChange={(e: any) => {
+                                setData({ ...data, googleMapsKey: e.target.value });
+                                setMadeChanges(true);
+                            }}
+                        />
 
-                            <Grid.Root>
-                                <Grid.Item col={5} padding={2}>
-                                    <Link
-                                        href='https://developers.google.com/maps/documentation/javascript/cloud-setup'
-                                        isExternal
-                                    >
-                                        Get your Google Maps API key
-                                    </Link>
-                                </Grid.Item>
+                        <Grid.Root>
+                            <Grid.Item col={5} padding={2}>
+                                <Link
+                                    href='https://developers.google.com/maps/documentation/javascript/cloud-setup'
+                                    isExternal
+                                >
+                                    Get your Google Maps API key
+                                </Link>
+                            </Grid.Item>
 
-                                <Grid.Item col={5} padding={2}>
-                                    <Link
-                                        href='https://developers.google.com/maps/documentation/javascript/places'
-                                        isExternal
-                                    >
-                                        Grant your API key access to the Google Places API
-                                    </Link>
-                                </Grid.Item>
-                            </Grid.Root>
-                        </Box>
-                    )}
-                </Box>
-            </Main>
-        </Box>
+                            <Grid.Item col={5} padding={2}>
+                                <Link
+                                    href='https://developers.google.com/maps/documentation/javascript/places'
+                                    isExternal
+                                >
+                                    Grant your API key access to the Google Places API
+                                </Link>
+                            </Grid.Item>
+                        </Grid.Root>
+                    </Box>
+                )}
+            </Layouts.Content>
+        </Page.Main>
     );
 };
 
-export { Settings };
+export default Settings;

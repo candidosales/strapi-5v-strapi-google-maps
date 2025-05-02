@@ -5,6 +5,13 @@ import { PluginIcon } from './components/PluginIcon';
 
 // const name = pluginPkg.strapi.displayName;
 
+const settingsComponent = async () => {
+    const component = await import(
+      /* webpackChunkName: "settings-page" */ './pages/Settings'
+    );
+    return component.default;
+};
+
 export default {
     register(app: any) {
         app.createSettingSection(
@@ -24,13 +31,7 @@ export default {
                     },
                     id: PLUGIN_ID,
                     to: `/settings/${PLUGIN_ID}`,
-                    Component: async () => {
-                        const component = await import(
-                    /* webpackChunkName: "settings-page" */ './pages/Settings'
-                        );
-
-                        return component;
-                    },
+                    Component: settingsComponent,
                     permissions: [
                         { action: `plugin::${PLUGIN_ID}.config`, subject: null },
                     ],

@@ -6,8 +6,8 @@
 
 import React from 'react';
 import { Page } from '@strapi/strapi/admin';
-import { Settings } from '../components/Settings';
 import { PLUGIN_ID } from '../pluginId';
+import Settings from '../components/Settings';
 
 const permissions = [{ action: `plugin::${PLUGIN_ID}.config`, subject: null }];
 
@@ -19,4 +19,4 @@ const SettingsPage = () => {
     );
 };
 
-export { SettingsPage };
+export default SettingsPage;
