@@ -104,7 +104,7 @@ export default function Input({
     return (
         <>
             <Typography variant='pi' fontWeight='bold'>
-                {/* {formatMessage(intlLabel)} */}
+                {/* TODO {formatMessage(intlLabel)} */}
                 Location Picker
             </Typography>
 
