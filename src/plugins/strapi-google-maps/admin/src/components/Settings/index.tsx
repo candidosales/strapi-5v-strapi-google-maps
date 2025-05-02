@@ -7,7 +7,7 @@ import {
     Link,
     Grid,
 } from '@strapi/design-system';
-import { Check, WarningCircle } from '@strapi/icons';
+import { Check } from '@strapi/icons';
 import useConfig from '../../hooks/useConfig';
 import { Config, UpdateConfig } from '../../../../types';
 import { Layouts, Page, useAuth } from '@strapi/strapi/admin';
