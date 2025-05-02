@@ -8,102 +8,51 @@ import {
     Grid,
 } from '@strapi/design-system';
 import { Check, WarningCircle } from '@strapi/icons';
-import { AxiosResponse } from 'axios';
-import { Config } from '../../../../server/src/interface';
-import { PLUGIN_ID } from '../../pluginId';
-import { Page, Layouts, useNotification } from '@strapi/strapi/admin';
-import { useIntl } from 'react-intl';
-import { getConfig, updateConfig } from '../../utils/axios';
-import { useAuth } from '@strapi/strapi/admin';
+import useConfig from '../../hooks/useConfig';
+import { Config, UpdateConfig } from '../../../../types';
+import { Layouts, Page, useAuth } from '@strapi/strapi/admin';
 
-const Settings = () => {
-    const { toggleNotification } = useNotification();
-    const { formatMessage } = useIntl();
+export default function Settings() {
+    const [saveConfig, setSaveConfig] = useState<UpdateConfig | undefined>();
+
+    const [inputFields, setInputFields] = useState<UpdateConfig | undefined>();
+
+    const [unsavedChanges, setUnsavedChanges] = useState(false);
     const token = useAuth('ConfigurationProvider', (state) => state.token);
+    const config = useConfig(token ?? '', saveConfig);
 
-
-    const [isLoading, setIsLoading] = useState(false);
-    const [errorOccurred, setErrorOccurred] = useState({
-        hasError: false,
-        errorMessage: '',
-    });
-
-    const [data, setData] = useState<Config>({
-        id: 0,
-        googleMapsKey: '',
-    });
-    const [madeChanges, setMadeChanges] = useState(false);
-
-    /* Fetch plugin config using axios instance */
     useEffect(() => {
-
-        console.log('token', token);
-
-        if (token) {
-            getConfig(token)
-                .then((response: AxiosResponse) => {
-                    console.log('getConfig response', response);
-
-                    setIsLoading(false);
-
-                    const { data: config }: { data: Config } = response.data;
-                    setData(config);
-                })
-                .catch((error: any) => {
-                    setIsLoading(false);
-
-                    console.error(error);
-
-                    setErrorOccurred({
-                        hasError: true,
-                        errorMessage: error.message,
-                    });
-                });
+        if (!!config) {
+            setInputFields(config);
         }
-    }, []);
+    }, [config]);
 
-    /* Save plugin config using axios instance */
-    const handleSave = async () => {
-        setIsLoading(true);
+    useEffect(() => {
+        if (!inputFields || !config) return;
 
-        if (token) {
-            try {
-                await updateConfig(token, data);
+        const inputFieldChanged = Object.entries(inputFields).some(
+            ([key, value]) => value !== config[key as keyof Config]
+        );
 
-                setMadeChanges(false);
+        setUnsavedChanges(inputFieldChanged);
+    }, [inputFields]);
 
-                toggleNotification({
-                    type: 'success',
-                    message: formatMessage({
-                        id: `${PLUGIN_ID}.config.updated`,
-                        defaultMessage: 'Configuration updated',
-                    }),
-                });
-            } catch (error) {
-                console.error(error);
+    const onSave = () => {
+        setUnsavedChanges(false);
 
-                toggleNotification({
-                    type: 'warning',
-                    message: formatMessage({
-                        id: `${PLUGIN_ID}.error`,
-                        defaultMessage: 'An error occurred',
-                    })
-                });
-            } finally {
-                setIsLoading(false);
-            }
-        }
+        setSaveConfig(inputFields);
     };
 
     return (
-        <Page.Main>
+
+        <Page.Main aria-busy={config === undefined}>
             <Layouts.Header
                 primaryAction={
                     <Button
                         startIcon={<Check />}
-                        loading={isLoading}
-                        disabled={errorOccurred || !madeChanges}
-                        onClick={handleSave}
+                        loading={config === undefined}
+                        disabled={!unsavedChanges}
+                        onClick={onSave}
                     >
                         Save
                     </Button>
@@ -113,12 +62,11 @@ const Settings = () => {
             />
 
             <Layouts.Content>
-                {errorOccurred.hasError ? (
-                    // @ts-ignore
-                    <Page.Error content={errorOccurred.errorMessage} icon={<WarningCircle />} />
-                ) : isLoading ? (
+                {config === null ? (
+                    <Page.Error content={'An error occurred'} icon={<WarningCircle />} />
+                ) : config === undefined || !inputFields ? (
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <Loader>Loading content...</Loader>
+                        <Loader />
                     </div>
                 ) : (
                     <Box
@@ -136,10 +84,12 @@ const Settings = () => {
                             name='apiKey'
                             placeholder='Paste your Google Maps API key here'
                             label='API Key'
-                            value={data.googleMapsKey}
+                            value={inputFields.googleMapsKey}
                             onChange={(e: any) => {
-                                setData({ ...data, googleMapsKey: e.target.value });
-                                setMadeChanges(true);
+                                setInputFields({
+                                    ...inputFields,
+                                    googleMapsKey: e.target.value,
+                                });
                             }}
                         />
 
@@ -167,6 +117,4 @@ const Settings = () => {
             </Layouts.Content>
         </Page.Main>
     );
-};
-
-export default Settings;
+}

@@ -20,26 +20,25 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
                 data: {},
                 select: fields,
             })) as Config;
-
-            console.log(config);
         }
 
         return config;
     },
 
-    async update(data: any): Promise<Config> {
+    async update({ data }): Promise<Config> {
         /* Retrieve config */
         let config: Config = await this.retrieve();
 
         /* Update config */
-        if (!config) {
-            config = (await strapi.db.query(uid).update({
+        config = (await strapi.db.query(uid).update({
+            where: {
+                id: config.id,
+            },
+            data: {
                 ...data,
                 fields,
-            })) as Config;
-
-            console.log(config);
-        }
+            },
+        })) as Config;
 
         return config;
     },
