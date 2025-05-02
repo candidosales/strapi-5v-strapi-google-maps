@@ -5,7 +5,7 @@ import { isSamePoint, isValidPoint, noPoint } from '../../utils/input';
 import { useIntl } from 'react-intl';
 import useConfig from '../../hooks/useConfig';
 import { Marker } from '@react-google-maps/api';
-import { Clock } from '@strapi/icons';
+import { ArrowClockwise } from '@strapi/icons';
 import Geohash from 'latlon-geohash';
 import MapView from './MapView';
 import NumberFields from './CoordsInput';
@@ -13,7 +13,6 @@ import { useAuth } from '@strapi/strapi/admin';
 
 export default function Input({
     attribute,
-    intlLabel,
     onChange,
     value,
     name,
@@ -77,7 +76,13 @@ export default function Input({
     }, [currentPoint, currentAddress]);
 
     useEffect(() => {
-        const parsedValue: Location | null = !!value ? JSON.parse(value) : null;
+        if (!value) return;
+
+        let parsedValue: Location = value;
+
+        if (typeof value === 'string') {
+            parsedValue = JSON.parse(value);
+        }
 
         if (!parsedValue) return;
 
@@ -147,7 +152,7 @@ export default function Input({
                     </Box>
 
                     <Box paddingTop={2}>
-                        <Button startIcon={<Clock />} onClick={onReset}>
+                        <Button startIcon={<ArrowClockwise />} onClick={onReset}>
                             {formatMessage({
                                 id: 'google-maps.input.button.reset',
                                 defaultMessage: 'Reset',
