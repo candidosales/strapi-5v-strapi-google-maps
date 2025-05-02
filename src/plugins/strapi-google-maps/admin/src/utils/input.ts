@@ -1,4 +1,4 @@
-import { Coordinates } from "../../../server/src/interface";
+import { Coordinates } from '../../../types';
 
 /**
  * Get the default coordinates from the field's attributes
@@ -20,4 +20,20 @@ export const getDefaultCordsFromAttribute = ({
     }
 
     return null;
+};
+
+export const noPoint: Coordinates = {
+    lat: NaN,
+    lng: NaN,
+};
+
+export const isValidPoint = (point: Coordinates): boolean => {
+    return !isNaN(point.lat) && !isNaN(point.lng);
+};
+
+export const isSamePoint = (
+    point1: Coordinates,
+    point2: Coordinates
+): boolean => {
+    return point1.lat === point2.lat && point1.lng === point2.lng;
 };

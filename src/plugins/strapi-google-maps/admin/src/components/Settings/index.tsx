@@ -63,7 +63,7 @@ export default function Settings() {
 
             <Layouts.Content>
                 {config === null ? (
-                    <Page.Error content={'An error occurred'} icon={<WarningCircle />} />
+                    <Page.Error />
                 ) : config === undefined || !inputFields ? (
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <Loader />

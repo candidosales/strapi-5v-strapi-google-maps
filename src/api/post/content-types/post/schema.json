@@ -4,7 +4,8 @@
   "info": {
     "singularName": "post",
     "pluralName": "posts",
-    "displayName": "Post"
+    "displayName": "Post",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -16,6 +17,11 @@
     "slug": {
       "type": "uid",
       "targetField": "title"
+    },
+    "location": {
+      "type": "customField",
+      "customField": "plugin::strapi-google-maps.location-picker",
+      "required": true
     }
   }
 }

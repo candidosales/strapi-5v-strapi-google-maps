@@ -5,9 +5,18 @@ import { PluginIcon } from './components/PluginIcon';
 
 // const name = pluginPkg.strapi.displayName;
 
-const settingsComponent = async () => {
+// const settingsComponent = async () => {
+//     const component = await import(
+//       /* webpackChunkName: "settings-page" */ './pages/Settings'
+//     );
+//     return component.default;
+
+//     Component: () => import(path)
+// };
+
+const inputComponent = async () => {
     const component = await import(
-      /* webpackChunkName: "settings-page" */ './pages/Settings'
+      /* webpackChunkName: "input-component" */ './components/Input'
     );
     return component.default;
 };
@@ -31,7 +40,7 @@ export default {
                     },
                     id: PLUGIN_ID,
                     to: `/settings/${PLUGIN_ID}`,
-                    Component: settingsComponent,
+                    Component: () => import('./pages/Settings'),
                     permissions: [
                         { action: `plugin::${PLUGIN_ID}.config`, subject: null },
                     ],
@@ -44,19 +53,16 @@ export default {
             pluginId: PLUGIN_ID,
             type: 'json',
             intlLabel: {
-                id: getTranslation('input.label'),
-                defaultMessage: "Location",
+                id: 'input.label',
+                defaultMessage: 'Location Picker',
             },
             intlDescription: {
-                id: 'google-maps.input.description',
+                id: 'input.description',
                 defaultMessage: 'Pick your location',
             },
             icon: PluginIcon,
             components: {
-                Input: async () =>
-                    import(
-                  /* webpackChunkName: "input-component" */ './components/Input'
-                    ),
+                Input: () => import('./components/Input'),
             },
             options: {
                 advanced: [
@@ -64,7 +70,7 @@ export default {
                         name: 'optionsDefaultLat',
                         type: 'string',
                         intlLabel: {
-                            id: getTranslation('attribute.item.defaultLat'),
+                            id: 'attribute.item.defaultLat',
                             defaultMessage: 'Default latitude',
                         },
                     },
@@ -72,7 +78,7 @@ export default {
                         name: 'optionsDefaultLng',
                         type: 'string',
                         intlLabel: {
-                            id: getTranslation('attribute.item.defaultLng'),
+                            id: 'attribute.item.defaultLng',
                             defaultMessage: 'Default longitude',
                         },
                     },
