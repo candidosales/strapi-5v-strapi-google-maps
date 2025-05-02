@@ -1,11 +1,8 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { PLUGIN_ID } from '../pluginId';
-import { useAuth } from '@strapi/strapi/admin';
 import { Config } from '../../../server/src/interface';
 
-const useAxios = (): AxiosInstance => {
-    const token = useAuth('ConfigurationProvider', (state) => state.token);
-
+const useAxios = (token: string): AxiosInstance => {
     const instance = axios.create({
         baseURL: `${process.env.STRAPI_ADMIN_BACKEND_URL}/${PLUGIN_ID}`,
         headers: {
@@ -29,9 +26,9 @@ const useAxios = (): AxiosInstance => {
 
 export default useAxios;
 
-export const getConfig = (): Promise<AxiosResponse> => useAxios().get('/config');
+export const getConfig = (token: string): Promise<AxiosResponse> => useAxios(token).get('/config');
 
-export const updateConfig = (config: Config): Promise<AxiosResponse> =>
-    useAxios().put('/config', {
+export const updateConfig = (token: string, config: Config): Promise<AxiosResponse> =>
+    useAxios(token).put('/config', {
         data: config,
     });

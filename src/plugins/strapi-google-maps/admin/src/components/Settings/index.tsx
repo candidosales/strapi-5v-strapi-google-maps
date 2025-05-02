@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Main,
     Loader,
     TextInput,
     Box,
@@ -8,20 +7,26 @@ import {
     Link,
     Grid,
 } from '@strapi/design-system';
-import { Check } from '@strapi/icons';
+import { Check, WarningCircle } from '@strapi/icons';
 import { AxiosResponse } from 'axios';
 import { Config } from '../../../../server/src/interface';
 import { PLUGIN_ID } from '../../pluginId';
 import { Page, Layouts, useNotification } from '@strapi/strapi/admin';
 import { useIntl } from 'react-intl';
 import { getConfig, updateConfig } from '../../utils/axios';
+import { useAuth } from '@strapi/strapi/admin';
 
 const Settings = () => {
     const { toggleNotification } = useNotification();
     const { formatMessage } = useIntl();
+    const token = useAuth('ConfigurationProvider', (state) => state.token);
+
 
     const [isLoading, setIsLoading] = useState(false);
-    const [errorOccurred, setErrorOccurred] = useState(false);
+    const [errorOccurred, setErrorOccurred] = useState({
+        hasError: false,
+        errorMessage: '',
+    });
 
     const [data, setData] = useState<Config>({
         id: 0,
@@ -30,51 +35,63 @@ const Settings = () => {
     const [madeChanges, setMadeChanges] = useState(false);
 
     /* Fetch plugin config using axios instance */
-    // useEffect(() => {
-    //     getConfig()
-    //         .then((response: AxiosResponse) => {
-    //             setIsLoading(false);
+    useEffect(() => {
 
-    //             const { data: config }: { data: Config } = response.data;
-    //             setData(config);
-    //         })
-    //         .catch((error: any) => {
-    //             setIsLoading(false);
+        console.log('token', token);
 
-    //             console.error(error);
+        if (token) {
+            getConfig(token)
+                .then((response: AxiosResponse) => {
+                    console.log('getConfig response', response);
 
-    //             setErrorOccurred(true);
-    //         });
-    // }, []);
+                    setIsLoading(false);
+
+                    const { data: config }: { data: Config } = response.data;
+                    setData(config);
+                })
+                .catch((error: any) => {
+                    setIsLoading(false);
+
+                    console.error(error);
+
+                    setErrorOccurred({
+                        hasError: true,
+                        errorMessage: error.message,
+                    });
+                });
+        }
+    }, []);
 
     /* Save plugin config using axios instance */
     const handleSave = async () => {
         setIsLoading(true);
 
-        try {
-            await updateConfig(data);
+        if (token) {
+            try {
+                await updateConfig(token, data);
 
-            setMadeChanges(false);
+                setMadeChanges(false);
 
-            toggleNotification({
-                type: 'success',
-                message: formatMessage({
-                    id: `${PLUGIN_ID}.config.updated`,
-                    defaultMessage: 'Configuration updated',
-                }),
-            });
-        } catch (error) {
-            console.error(error);
+                toggleNotification({
+                    type: 'success',
+                    message: formatMessage({
+                        id: `${PLUGIN_ID}.config.updated`,
+                        defaultMessage: 'Configuration updated',
+                    }),
+                });
+            } catch (error) {
+                console.error(error);
 
-            toggleNotification({
-                type: 'warning',
-                message: formatMessage({
-                    id: `${PLUGIN_ID}.error`,
-                    defaultMessage: 'An error occurred',
-                })
-            });
-        } finally {
-            setIsLoading(false);
+                toggleNotification({
+                    type: 'warning',
+                    message: formatMessage({
+                        id: `${PLUGIN_ID}.error`,
+                        defaultMessage: 'An error occurred',
+                    })
+                });
+            } finally {
+                setIsLoading(false);
+            }
         }
     };
 
@@ -96,9 +113,9 @@ const Settings = () => {
             />
 
             <Layouts.Content>
-                {errorOccurred ? (
+                {errorOccurred.hasError ? (
                     // @ts-ignore
-                    <Page.Error content="An error occurred" icon={<div>Custom icon</div>} />
+                    <Page.Error content={errorOccurred.errorMessage} icon={<WarningCircle />} />
                 ) : isLoading ? (
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <Loader>Loading content...</Loader>
