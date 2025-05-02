@@ -3,24 +3,6 @@ import { PLUGIN_ID } from './pluginId';
 import { Initializer } from './components/Initializer';
 import { PluginIcon } from './components/PluginIcon';
 
-// const name = pluginPkg.strapi.displayName;
-
-// const settingsComponent = async () => {
-//     const component = await import(
-//       /* webpackChunkName: "settings-page" */ './pages/Settings'
-//     );
-//     return component.default;
-
-//     Component: () => import(path)
-// };
-
-const inputComponent = async () => {
-    const component = await import(
-      /* webpackChunkName: "input-component" */ './components/Input'
-    );
-    return component.default;
-};
-
 export default {
     register(app: any) {
         app.createSettingSection(
