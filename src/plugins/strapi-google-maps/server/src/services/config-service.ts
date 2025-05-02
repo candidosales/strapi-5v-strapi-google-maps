@@ -1,7 +1,7 @@
 import { Core } from '@strapi/strapi';
 import { Config } from 'src/interface';
 
-const uid = 'plugin::google-maps.config';
+const uid = 'plugin::strapi-google-maps.config';
 const fields = ['googleMapsKey'];
 
 export default ({ strapi }: { strapi: Core.Strapi }) => ({

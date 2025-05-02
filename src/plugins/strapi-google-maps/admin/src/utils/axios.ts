@@ -4,7 +4,7 @@ import { Config } from '../../../server/src/interface';
 
 const useAxios = (token: string): AxiosInstance => {
     const instance = axios.create({
-        baseURL: `${process.env.STRAPI_ADMIN_BACKEND_URL}/${PLUGIN_ID}`,
+        baseURL: `${process.env.STRAPI_ADMIN_BACKEND_URL}/api/${PLUGIN_ID}`,
         headers: {
             'Content-Type': 'application/json',
         },

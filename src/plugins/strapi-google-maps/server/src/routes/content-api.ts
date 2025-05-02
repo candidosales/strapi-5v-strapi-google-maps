@@ -5,7 +5,10 @@ export default [
         // name of the controller file & the method.
         handler: 'config.index',
         config: {
-            policies: ['admin::isAuthenticatedAdmin'],
+            // TODO - Fix this
+            // policies: ['admin::isAuthenticatedAdmin'],
+            policies: [],
+            auth: false,
         },
     },
     {
@@ -13,15 +16,18 @@ export default [
         path: '/config',
         handler: 'config.update',
         config: {
-            policies: [
-                'admin::isAuthenticatedAdmin',
-                {
-                    name: 'admin::hasPermissions',
-                    config: {
-                        actions: ['plugin::google-maps.config'],
-                    },
-                },
-            ],
+            // TODO - Fix this
+            // policies: [
+            //     'admin::isAuthenticatedAdmin',
+            //     {
+            //         name: 'admin::hasPermissions',
+            //         config: {
+            //             actions: ['plugin::strapi-google-maps.config'],
+            //         },
+            //     },
+            // ],
+            policies: [],
+            auth: false,
         },
     },
 ];

@@ -159,7 +159,9 @@ npm run build
 ```
 
 ## Migration
+
 - Design system: https://design-system-git-main-strapijs.vercel.app/?path=/docs/getting-started-migration-guides-v1-to-v2--docs
+- https://docs.strapi.io/cms/plugins-development/guides/pass-data-from-server-to-admin
 
 ## Run locally
 

@@ -1,4 +1,4 @@
-import config from './config-controller';
+import config from './config';
 export default {
     config,
 };

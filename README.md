@@ -59,3 +59,7 @@ Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/
 ---
 
 <sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+
+## TODO
+
+- [ ] Update documentation fixing the path adding /api/my-plugin/pass-data : https://docs.strapi.io/cms/plugins-development/guides/pass-data-from-server-to-admin
