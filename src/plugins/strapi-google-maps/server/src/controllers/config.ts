@@ -9,9 +9,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
             .service('config')
             .retrieve();
 
-        ctx.body = {
-            data: config,
-        };
+        ctx.body = config;
     },
 
     async update(ctx: any) {
@@ -26,8 +24,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
 
         console.log('update - config', config);
 
-        ctx.body = {
-            data: config,
-        };
+        ctx.body = config;
+
     },
 });

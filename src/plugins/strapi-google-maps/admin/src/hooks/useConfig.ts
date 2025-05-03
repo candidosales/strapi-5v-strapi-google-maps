@@ -8,7 +8,7 @@ const endpoint = '/config';
 export default function useConfig(token = '', newConfig?: UpdateConfig) {
     const [config, setConfig] = useState<Config | undefined | null>();
 
-    const onResponse = ({ data }: AxiosResponse) => setConfig(data.data);
+    const onResponse = ({ data }: AxiosResponse) => setConfig(data);
 
     const onError = (error: Error) => {
         console.error(error);
