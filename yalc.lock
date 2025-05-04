@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "strapi-google-maps": {
-      "signature": "41dd7b3e9c6e543d2e2399acc44afff0"
+      "signature": "fc608d19546016c1b7bf00f99205ffd1"
     }
   }
 }

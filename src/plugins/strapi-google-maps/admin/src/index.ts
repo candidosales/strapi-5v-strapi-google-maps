@@ -1,4 +1,3 @@
-import { getTranslation } from './utils/getTranslation';
 import { PLUGIN_ID } from './pluginId';
 import { Initializer } from './components/Initializer';
 import { PluginIcon } from './components/PluginIcon';
@@ -9,7 +8,7 @@ export default {
             {
                 id: PLUGIN_ID,
                 intlLabel: {
-                    id: getTranslation('settings.section-label'),
+                    id: 'settings.section-label',
                     defaultMessage: 'Google Maps',
                 },
             }, // Section to create
@@ -17,7 +16,7 @@ export default {
                 // links
                 {
                     intlLabel: {
-                        id: getTranslation('settings.link-label'),
+                        id: 'settings.link-label',
                         defaultMessage: 'Configuration',
                     },
                     id: PLUGIN_ID,
@@ -52,7 +51,7 @@ export default {
                         name: 'optionsDefaultLat',
                         type: 'string',
                         intlLabel: {
-                            id: 'attribute.item.defaultLat',
+                            id: 'attribute.item.default-lat',
                             defaultMessage: 'Default latitude',
                         },
                     },
@@ -60,7 +59,7 @@ export default {
                         name: 'optionsDefaultLng',
                         type: 'string',
                         intlLabel: {
-                            id: 'attribute.item.defaultLng',
+                            id: 'attribute.item.default-lng',
                             defaultMessage: 'Default longitude',
                         },
                     },
@@ -74,11 +73,11 @@ export default {
                                 name: 'required',
                                 type: 'checkbox',
                                 intlLabel: {
-                                    id: 'form.attribute.item.requiredField',
+                                    id: 'form.attribute.item.required-field',
                                     defaultMessage: 'Required field',
                                 },
                                 description: {
-                                    id: 'form.attribute.item.requiredField.description',
+                                    id: 'form.attribute.item.required-field.description',
                                     defaultMessage:
                                         "You won't be able to create an entry if this field is empty",
                                 },

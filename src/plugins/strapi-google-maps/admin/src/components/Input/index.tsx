@@ -20,6 +20,7 @@ export default function Input({
 }: any) {
     const { formatMessage } = useIntl();
 
+
     const token = useAuth('ConfigurationProvider', (state) => state.token);
 
     const config = useConfig();
@@ -104,8 +105,9 @@ export default function Input({
     return (
         <>
             <Typography variant='pi' fontWeight='bold'>
-                {/* TODO {formatMessage(intlLabel)} */}
-                Location Picker
+                {formatMessage({
+                    id: 'input.label',
+                })}
             </Typography>
 
             {!config && (
@@ -135,8 +137,7 @@ export default function Input({
                         <Box paddingTop={1}>
                             <Typography variant='pi' textColor='danger600'>
                                 {formatMessage({
-                                    id: 'google-maps.input.error.required',
-                                    defaultMessage: 'You must pick a location',
+                                    id: 'input.error.required',
                                 })}
                             </Typography>
                         </Box>
@@ -154,8 +155,7 @@ export default function Input({
                     <Box paddingTop={2}>
                         <Button startIcon={<ArrowClockwise />} onClick={onReset}>
                             {formatMessage({
-                                id: 'google-maps.input.button.reset',
-                                defaultMessage: 'Reset',
+                                id: 'input.button.reset',
                             })}
                         </Button>
                     </Box>
