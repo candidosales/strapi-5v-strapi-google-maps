@@ -67,7 +67,7 @@
         "displayName": "Strapi Google Maps",
         "description": "A Google Maps custom field for Strapi, allowing you to pick a location."
     },
-    "name": "strapi-google-maps",
+    "name": "@candidosales/strapi-google-maps",
     "description": "A Google Maps custom field for Strapi, allowing you to pick a location.",
     "license": "MIT",
     "author": "Candido Sales Gomes <candidosg@gmail.com>"
