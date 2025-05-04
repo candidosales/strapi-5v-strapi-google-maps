@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0",
+    "version": "1.0.2",
     "keywords": [],
     "type": "commonjs",
     "exports": {
@@ -66,6 +66,14 @@
         "name": "strapi-google-maps",
         "displayName": "Strapi Google Maps",
         "description": "A Google Maps custom field for Strapi, allowing you to pick a location."
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/candidosales/strapi-google-maps.git"
+    },
+    "engines": {
+        "node": ">=18.0.0 <=22.x.x",
+        "npm": ">=6.0.0"
     },
     "name": "@candidosales/strapi-google-maps",
     "description": "A Google Maps custom field for Strapi, allowing you to pick a location.",
