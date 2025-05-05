@@ -2,7 +2,7 @@ import { Core } from '@strapi/strapi';
 import { Config } from 'src/interface';
 
 const uid = 'plugin::strapi-google-maps.config';
-const fields = ['googleMapsKey'];
+const fields = ['googleMapsKey', 'defaultLatitude', 'defaultLongitude'];
 
 export default ({ strapi }: { strapi: Core.Strapi }) => ({
     async retrieve(): Promise<Config> {

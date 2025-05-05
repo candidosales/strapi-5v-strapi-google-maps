@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { PLUGIN_ID } from '../pluginId';
 import { Config } from '../../../server/src/interface';
 
+// TODO: Replace with useFetchClient
 const useAxios = (token: string): AxiosInstance => {
     const instance = axios.create({
         baseURL: `${process.env.STRAPI_ADMIN_BACKEND_URL}/api/${PLUGIN_ID}`,

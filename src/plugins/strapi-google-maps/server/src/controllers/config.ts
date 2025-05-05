@@ -9,9 +9,6 @@ export default ({ strapi }: { strapi: Core.Strapi }) => ({
             .service('config')
             .retrieve();
 
-        console.log('config', config)
-        console.log('process.env.GOOGLE_MAPS_API_KEY', process.env.GOOGLE_MAPS_API_KEY)
-
         if (config.googleMapsKey == '' && process.env.GOOGLE_MAPS_API_KEY) {
             config.googleMapsKey = process.env.GOOGLE_MAPS_API_KEY;
         }

@@ -26,6 +26,18 @@ const schema = {
             required: true,
             configurable: false,
         },
+        defaultLatitude: {
+            type: 'string',
+            default: '',
+            required: true,
+            configurable: false,
+        },
+        defaultLongitude: {
+            type: 'string',
+            default: '',
+            required: true,
+            configurable: false,
+        },
     },
 };
 

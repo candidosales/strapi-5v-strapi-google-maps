@@ -20,9 +20,6 @@ export default function Input({
 }: any) {
     const { formatMessage } = useIntl();
 
-
-    const token = useAuth('ConfigurationProvider', (state) => state.token);
-
     const config = useConfig();
 
     const [focusPoint, setFocusPoint] = useState<Coordinates | undefined>();
@@ -95,6 +92,16 @@ export default function Input({
         setCurrentPoint({ origin: 'fieldValue', value: coordinates });
         setCurrentAddress(address);
     }, [value]);
+
+    // If the config is set and the value is not set, set the focus point to the default latitude and longitude
+    useEffect(() => {
+        if (config && !value) {
+            setFocusPoint({
+                lat: parseFloat(config.defaultLatitude),
+                lng: parseFloat(config.defaultLongitude),
+            });
+        }
+    }, [config]);
 
     const onReset = () => {
         setCurrentPoint({ origin: 'reset', value: noPoint });

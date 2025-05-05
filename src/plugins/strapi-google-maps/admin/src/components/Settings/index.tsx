@@ -10,7 +10,7 @@ import {
 import { Check } from '@strapi/icons';
 import useConfig from '../../hooks/useConfig';
 import { Config, UpdateConfig } from '../../../../types';
-import { Layouts, Page, useAuth } from '@strapi/strapi/admin';
+import { Layouts, Page } from '@strapi/strapi/admin';
 
 export default function Settings() {
     const [saveConfig, setSaveConfig] = useState<UpdateConfig | undefined>();
@@ -18,8 +18,7 @@ export default function Settings() {
     const [inputFields, setInputFields] = useState<UpdateConfig | undefined>();
 
     const [unsavedChanges, setUnsavedChanges] = useState(false);
-    const token = useAuth('ConfigurationProvider', (state) => state.token);
-    const config = useConfig(token ?? '', saveConfig);
+    const config = useConfig('', saveConfig);
 
     useEffect(() => {
         if (!!config) {
@@ -92,6 +91,41 @@ export default function Settings() {
                                 });
                             }}
                         />
+                        <Grid.Root>
+                            <Grid.Item col={2} padding={0}>
+                                <TextInput
+                                    type='text'
+                                    id='defaultLatitude'
+                                    name='defaultLatitude'
+                                    placeholder='Default Latitude'
+                                    label='Default Latitude'
+                                    value={inputFields.defaultLatitude}
+                                    onChange={(e: any) => {
+                                        setInputFields({
+                                            ...inputFields,
+                                            defaultLatitude: e.target.value,
+                                        });
+                                    }}
+                                />
+                            </Grid.Item>
+
+                            <Grid.Item col={2} padding={2}>
+                                <TextInput
+                                    type='text'
+                                    id='defaultLongitude'
+                                    name='defaultLongitude'
+                                    placeholder='Default Longitude'
+                                    label='Default Longitude'
+                                    value={inputFields.defaultLongitude}
+                                    onChange={(e: any) => {
+                                        setInputFields({
+                                            ...inputFields,
+                                            defaultLongitude: e.target.value,
+                                        });
+                                    }}
+                                />
+                            </Grid.Item>
+                        </Grid.Root>
 
                         <Grid.Root>
                             <Grid.Item col={5} padding={2}>
