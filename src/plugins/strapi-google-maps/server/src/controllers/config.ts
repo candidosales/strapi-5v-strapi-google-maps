@@ -4,10 +4,17 @@ import { Config } from 'src/interface';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => ({
     async index(ctx: any) {
-        const config: Config = await strapi
+        let config: Config = await strapi
             .plugin('strapi-google-maps')
             .service('config')
             .retrieve();
+
+        console.log('config', config)
+        console.log('process.env.GOOGLE_MAPS_API_KEY', process.env.GOOGLE_MAPS_API_KEY)
+
+        if (config.googleMapsKey == '' && process.env.GOOGLE_MAPS_API_KEY) {
+            config.googleMapsKey = process.env.GOOGLE_MAPS_API_KEY;
+        }
 
         ctx.body = config;
     },
